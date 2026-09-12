@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your Name — Site Reliability Engineering Leader</title>
+<meta name="description" content="Site Reliability Engineering leader with 9+ years driving observability, automation, and incident management for large-scale ecommerce platforms." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #161b22;
+    --ink-soft: #454e59;
+    --muted: #6b7480;
+    --line: #dde1e6;
+    --line-soft: #eceff2;
+    --paper: #f7f8f7;
+    --paper-raised: #ffffff;
+    --deep: #121820;
+    --deep-raised: #1b232e;
+    --deep-line: #2c3846;
+    --deep-text: #dfe6ec;
+    --deep-muted: #8b97a4;
+    --signal: #2f8f6e;
+    --signal-soft: #e4f1ec;
+    --amber: #b9812f;
+    --amber-soft: #f6ecdc;
+    --radius-sm: 3px;
+    --serif-none: 0;
+    --maxw: 760px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width: 920px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+  .prose{ max-width: var(--maxw); }
+
+  /* ---------- Status bar (nav) ---------- */
+  .statusbar{
+    position:sticky;
+    top:0;
+    z-index:40;
+    background:var(--deep);
+    border-bottom:1px solid var(--deep-line);
+  }
+  .statusbar-inner{
+    max-width:920px;
+    margin:0 auto;
+    padding:12px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+  }
+  .status-live{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--deep-muted);
+    white-space:nowrap;
+  }
+  .dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--signal);
+    flex:none;
+    box-shadow:0 0 0 3px rgba(47,143,110,0.22);
+  }
+  .statusbar nav{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+    font-size:13.5px;
+  }
+  .statusbar nav a{
+    text-decoration:none;
+    color:var(--deep-muted);
+    padding:4px 0;
+    border-bottom:1px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .statusbar nav a:hover{ color:var(--deep-text); border-color:var(--deep-line); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--deep);
+    color:var(--deep-text);
+    padding:64px 0 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-inner{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 28px 56px;
+    position:relative;
+    z-index:1;
+  }
+  .eyebrow-role{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--signal);
+    letter-spacing:0.01em;
+  }
+  h1.name{
+    font-size:clamp(2.2rem, 5vw, 3.1rem);
+    line-height:1.08;
+    margin:14px 0 10px;
+    font-weight:800;
+    letter-spacing:-0.015em;
+    max-width:14ch;
+  }
+  .hero-role{
+    font-size:1.15rem;
+    color:var(--deep-text);
+    max-width:46ch;
+    margin:0 0 6px;
+  }
+  .hero-loc{
+    font-size:0.92rem;
+    color:var(--deep-muted);
+    margin:0 0 34px;
+  }
+
+  .metric-strip{
+    display:flex;
+    flex-wrap:wrap;
+    border-top:1px solid var(--deep-line);
+  }
+  .metric{
+    flex:1 1 150px;
+    padding:20px 22px 20px 0;
+    border-right:1px solid var(--deep-line);
+  }
+  .metric:last-child{ border-right:none; }
+  .metric-value{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1.6rem;
+    font-weight:500;
+    color:#ffffff;
+    display:block;
+  }
+  .metric-value .unit{ font-size:1rem; color:var(--signal); }
+  .metric-label{
+    font-size:0.82rem;
+    color:var(--deep-muted);
+    margin-top:4px;
+    max-width:20ch;
+  }
+
+  .pulse{
+    position:absolute;
+    right:-40px;
+    top:30px;
+    width:420px;
+    height:180px;
+    opacity:0.55;
+    z-index:0;
+  }
+  @media (max-width: 720px){ .pulse{ display:none; } }
+
+  /* ---------- Section shell ---------- */
+  section{
+    padding:56px 0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  section:last-of-type{ border-bottom:none; }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:26px;
+  }
+  .section-head h2{
+    font-size:1.5rem;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .section-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .summary p{
+    color:var(--ink-soft);
+    font-size:1.03rem;
+  }
+
+  /* ---------- Timeline (experience) ---------- */
+  .timeline{
+    border-left:2px solid var(--line);
+    margin-left:6px;
+  }
+  .role{
+    position:relative;
+    padding:2px 0 40px 30px;
+  }
+  .role:last-child{ padding-bottom:4px; }
+  .role::before{
+    content:"";
+    position:absolute;
+    left:-7px;
+    top:6px;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--signal);
+  }
+  .role-head{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:8px 20px;
+    margin-bottom:2px;
+  }
+  .role-title{ font-weight:700; font-size:1.08rem; }
+  .role-org{ color:var(--muted); font-weight:500; }
+  .role-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .role-sub{
+    font-size:0.88rem;
+    color:var(--muted);
+    margin:2px 0 14px;
+  }
+  .role ul{
+    margin:0;
+    padding-left:18px;
+    color:var(--ink-soft);
+  }
+  .role li{ margin-bottom:9px; }
+  .role li:last-child{ margin-bottom:0; }
+  .role li strong{ color:var(--ink); font-weight:600; }
+
+  /* ---------- Skills ---------- */
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px 24px;
+  }
+  @media (max-width: 720px){ .skill-groups{ grid-template-columns:1fr; } }
+  .skill-group h3{
+    font-size:0.82rem;
+    text-transform:none;
+    color:var(--muted);
+    margin:0 0 12px;
+    font-weight:600;
+    border-bottom:1px solid var(--line);
+    padding-bottom:8px;
+  }
+  .skill-group ul{
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .skill-group li{
+    font-size:0.86rem;
+    color:var(--ink-soft);
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    padding:5px 10px;
+    border-radius:var(--radius-sm);
+  }
+
+  .tools-row{
+    margin-top:30px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+  }
+  .tools-row h3{
+    font-size:0.82rem;
+    color:var(--muted);
+    margin:0 0 12px;
+    font-weight:600;
+  }
+  .tools-row p{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.86rem;
+    color:var(--ink-soft);
+    line-height:2;
+  }
+  .tools-row p span{ color:var(--line); padding:0 6px; }
+
+  /* ---------- Education / certs ---------- */
+  .grid-two{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:36px;
+  }
+  @media (max-width: 720px){ .grid-two{ grid-template-columns:1fr; gap:30px; } }
+  .grid-two h3{
+    font-size:0.82rem;
+    color:var(--muted);
+    margin:0 0 14px;
+    font-weight:600;
+    border-bottom:1px solid var(--line);
+    padding-bottom:8px;
+  }
+  .edu-item{ margin-bottom:16px; }
+  .edu-item:last-child{ margin-bottom:0; }
+  .edu-degree{ font-weight:600; }
+  .edu-meta{ font-size:0.88rem; color:var(--muted); }
+  .cert-item{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    margin-bottom:12px;
+    font-size:0.95rem;
+    color:var(--ink-soft);
+  }
+  .cert-item:last-child{ margin-bottom:0; }
+  .cert-mark{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--signal);
+    font-size:0.85rem;
+    margin-top:2px;
+  }
+
+  /* ---------- Footer / contact ---------- */
+  footer{
+    background:var(--deep);
+    color:var(--deep-text);
+    padding:52px 0 36px;
+  }
+  footer .wrap{ max-width:920px; }
+  footer h2{
+    font-size:1.6rem;
+    margin:0 0 10px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  footer p.lead{
+    color:var(--deep-muted);
+    max-width:50ch;
+    margin:0 0 28px;
+  }
+  .contact-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 14px;
+    margin-bottom:36px;
+  }
+  .contact-row a{
+    text-decoration:none;
+    font-size:0.92rem;
+    color:var(--deep-text);
+    border:1px solid var(--deep-line);
+    padding:9px 16px;
+    border-radius:var(--radius-sm);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .contact-row a:hover{ border-color:var(--signal); background:var(--deep-raised); }
+  .foot-meta{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    padding-top:22px;
+    border-top:1px solid var(--deep-line);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--deep-muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="statusbar-inner">
+    <div class="status-live"><span class="dot" aria-hidden="true"></span>Open to opportunities</div>
+    <nav aria-label="Section navigation">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <svg class="pulse" viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <polyline points="0,120 40,120 55,60 70,150 85,120 140,120 155,90 170,120 260,120 275,40 290,150 305,120 420,120"
+      stroke="#2f8f6e" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" opacity="0.7"/>
+    <line x1="0" y1="120" x2="420" y2="120" stroke="#2c3846" stroke-width="1"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="eyebrow-role">Site Reliability Engineering</div>
+    <h1 class="name">Arun K</h1>
+    <p class="hero-role">Associate Manager, SRE at Accenture — leading observability, automation, and incident management for large-scale ecommerce platforms.</p>
+    <p class="hero-loc">Bengaluru, India · arunkkd21@gmail.com · +91 703 412 3661 · https://www.linkedin.com/in/arun-k-b6a475131/</p>
+
+    <div class="metric-strip">
+      <div class="metric">
+        <span class="metric-value">11<span class="unit">+ yrs</span></span>
+        <div class="metric-label">In site reliability engineering</div>
+      </div>
+      <div class="metric">
+        <span class="metric-value">16–30</span>
+        <div class="metric-label">Engineers led across incident, cloud &amp; observability</div>
+      </div>
+      <div class="metric">
+        <span class="metric-value">60<span class="unit">%↓</span></span>
+        <div class="metric-label">Incident inflow, via automation-first delivery</div>
+      </div>
+      <div class="metric">
+        <span class="metric-value">95<span class="unit">%+</span></span>
+        <div class="metric-label">Uptime sustained through peak sale events</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="about">
+    <div class="section-head">
+      <h2>About</h2>
+      <span class="section-tag">summary</span>
+    </div>
+    <div class="summary prose">
+      <p>Site Reliability Engineering leader with 11+ years of experience driving application stability, observability, CDN engineering, and automation for large-scale ecommerce platforms. Currently Associate Manager at Accenture, leading a team of 16–30 engineers across incident management, cloud migration, content delivery, and enterprise observability.</p>
+      <p>Proven record of reducing incident inflow by over 60% and alert toil by over 50% through automation-first strategies, while sustaining greater than 95% uptime during high-velocity business events. Early adopter of AI-driven operations, building agentic tooling that automatically analyzes alerts, correlates events, and determines root cause to accelerate incident resolution.</p>
+      <p>Hands-on experience with Akamai CDN engineering, troubleshooting content delivery across the enterprise domain, and monitoring Web Security Analytics to mitigate bot and malicious traffic. AWS-certified, with experience architecting on-premises-to-cloud migrations, building end-to-end observability frameworks, and leading ITIL-aligned incident and problem management using ServiceNow.</p>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head">
+      <h2>Experience</h2>
+      <span class="section-tag">2015 — present</span>
+    </div>
+
+    <div class="timeline">
+      <div class="role">
+        <div class="role-head">
+          <span class="role-title">Associate Manager, Site Reliability Engineering</span>
+          <span class="role-date">JUN 2023 — PRESENT</span>
+        </div>
+        <div class="role-org">Accenture · Bengaluru, India</div>
+        <div class="role-sub">Team Lead, Jun 2023 – Feb 2026 → promoted to Associate Manager, Feb 2026 – Present</div>
+        <ul>
+          <li>Lead an SRE team of <strong>16–30 engineers</strong> supporting large-scale ecommerce platforms, owning automation, observability, and incident management strategy.</li>
+          <li>Architected and led the migration of the entire automation suite from on-premises infrastructure to <strong>AWS</strong>, improving scalability and reducing operational overhead.</li>
+          <li>Built end-to-end observability across front-end and back-end systems using Dynatrace, Splunk, Grafana, Sentry, and SpeedCurve.</li>
+          <li>Designed and delivered automation initiatives that reduced <strong>incident inflow by more than 60%</strong> and <strong>alert toil by more than 50%</strong>, while improving MTTR and MTTE.</li>
+          <li>Served as Cloud Ops engineer ensuring scalability via AWS EC2; troubleshoot application performance and scalability issues in production.</li>
+          <li>Oversee reliability and performance during high-velocity sale events and product launches, sustaining <strong>greater than 95% uptime</strong>.</li>
+          <li>Lead major incident bridges and drive ITIL-aligned incident and problem management using ServiceNow.</li>
+          <li>Own CDN engineering on Akamai, troubleshooting content delivery across the enterprise domain to maintain performance and availability.</li>
+          <li>Monitor Web Security Analytics on Akamai to proactively identify and mitigate bot activity and malicious traffic during peak and high-risk periods.</li>
+          <li>Built a <strong>Splunk MCP server with agentic capabilities</strong> to automatically analyze alerts, correlate events (Dynatrace problems, deployments, configuration changes), and determine root cause.</li>
+          <li>Built and maintained a custom observability framework using ReactJS and Node.js.</li>
+          <li>Partner with client stakeholders, business teams, and engineering teams to identify and close observability gaps.</li>
+        </ul>
+      </div>
+
+      <div class="role">
+        <div class="role-head">
+          <span class="role-title">Senior Software Engineer (Lead Site Reliability Engineer)</span>
+          <span class="role-date">JUN 2015 — JUN 2023</span>
+        </div>
+        <div class="role-org">Wipro Limited · Chennai, India</div>
+        <ul>
+          <li>Acted as lead Site Reliability Engineer for the ecommerce domain, specializing in automating repetitive operational tasks.</li>
+          <li>Built end-to-end observability using Splunk, Dynatrace, Grafana, Kibana, and Catchpoint.</li>
+          <li>Led adoption and optimization of alerting and on-call tools including GoAlert and PagerDuty.</li>
+          <li>Regularly audited alert configurations to reduce noise and operational toil.</li>
+          <li>Performed CDN engineering on Akamai, troubleshooting content delivery across the enterprise domain for consistent site performance.</li>
+          <li>Monitored Web Security Analytics to mitigate bot and malicious traffic across enterprise applications.</li>
+          <li>Acted as a bridge between SRE, business stakeholders, development teams, and performance engineering to stabilize customer experience.</li>
+          <li>Actively participated in post-incident review meetings, contributing to root-cause analysis and remediation planning.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head">
+      <h2>Skills</h2>
+      <span class="section-tag">capabilities</span>
+    </div>
+
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Leadership &amp; delivery</h3>
+        <ul>
+          <li>Team leadership &amp; people management</li>
+          <li>Stakeholder &amp; client management</li>
+          <li>Major incident bridge leadership</li>
+          <li>Automation strategy &amp; delivery</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>SRE practice</h3>
+        <ul>
+          <li>Incident &amp; problem management (ITIL)</li>
+          <li>Enterprise observability</li>
+          <li>Post-incident review &amp; RCA</li>
+          <li>Application performance &amp; scalability</li>
+          <li>AI-driven automation &amp; agentic tooling</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Platform &amp; delivery</h3>
+        <ul>
+          <li>Cloud migration &amp; operations (AWS)</li>
+          <li>CDN engineering &amp; content delivery (Akamai)</li>
+          <li>Web security analytics &amp; bot mitigation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tools-row">
+      <h3>Technical tools &amp; platforms</h3>
+      <p>
+        Python<span>·</span>Java<span>·</span>Akamai (CDN, Web Security Analytics)<span>·</span>AWS (EC2)<span>·</span>Splunk<span>·</span>Dynatrace<span>·</span>Grafana<span>·</span>Kibana<span>·</span>OpenSearch<span>·</span>Catchpoint<span>·</span>Sentry<span>·</span>SpeedCurve<span>·</span>ServiceNow<span>·</span>Jira<span>·</span>GoAlert<span>·</span>PagerDuty<span>·</span>Jenkins<span>·</span>GitHub<span>·</span>ReactJS<span>·</span>Node.js<span>·</span>Red Hat OpenShift
+      </p>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-head">
+      <h2>Education &amp; certifications</h2>
+      <span class="section-tag">credentials</span>
+    </div>
+
+    <div class="grid-two">
+      <div>
+        <h3>Education</h3>
+        <div class="edu-item">
+          <div class="edu-degree">Master of Technology (M.Tech), Software Engineering</div>
+          <div class="edu-meta">University Name · 2016 – 2019</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
+          <div class="edu-meta">University Name · 2012 – 2015</div>
+        </div>
+      </div>
+      <div>
+        <h3>Certifications</h3>
+        <div class="cert-item"><span class="cert-mark">✓</span><span>AWS Certified Solutions Architect – Associate</span></div>
+        <div class="cert-item"><span class="cert-mark">✓</span><span>AWS Certified Developer – Associate</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's talk</h2>
+    <p class="lead">Open to Site Reliability Engineering and engineering leadership roles focused on observability, automation, and large-scale platform stability.</p>
+    <div class="contact-row">
+      <a href="mailto:your.email@example.com">arunkkd21@gmail.com</a>
+      <a href="tel:+000000000">+91 703 412 3661</a>
+      <a href="https://linkedin.com/in/yourprofile">https://www.linkedin.com/in/arun-k-b6a475131/</a>
+    </div>
+    <div class="foot-meta">
+      <span>Arun K · Bengaluru, India</span>
+      <span>Resume last updated 2026</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
