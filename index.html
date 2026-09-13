@@ -124,6 +124,42 @@
     position:relative;
     z-index:1;
   }
+  .hero-top{
+    display:flex;
+    align-items:flex-start;
+    gap:26px;
+    margin-bottom:6px;
+  }
+  .avatar-wrap{
+    position:relative;
+    flex:none;
+    width:104px;
+    height:104px;
+  }
+  .avatar{
+    width:104px;
+    height:104px;
+    border-radius:50%;
+    object-fit:cover;
+    display:block;
+    border:2px solid var(--deep-line);
+    box-shadow:0 0 0 4px rgba(47,143,110,0.14);
+  }
+  .avatar-status{
+    position:absolute;
+    right:2px;
+    bottom:2px;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:var(--signal);
+    border:3px solid var(--deep);
+  }
+  @media (max-width: 560px){
+    .hero-top{ gap:18px; }
+    .avatar-wrap, .avatar{ width:72px; height:72px; }
+    .avatar-status{ width:14px; height:14px; border-width:2px; }
+  }
   .eyebrow-role{
     font-family:'IBM Plex Mono', monospace;
     font-size:13px;
@@ -422,8 +458,16 @@
     <line x1="0" y1="120" x2="420" y2="120" stroke="#2c3846" stroke-width="1"/>
   </svg>
   <div class="hero-inner">
-    <div class="eyebrow-role">Site Reliability Engineering</div>
-    <h1 class="name">Arun K</h1>
+    <div class="hero-top">
+      <div class="avatar-wrap">
+        <img class="avatar" src="profile.png" alt="Portrait of Arun" />
+        <span class="avatar-status" title="Open to opportunities" aria-hidden="true"></span>
+      </div>
+      <div>
+        <div class="eyebrow-role">Site Reliability Engineering</div>
+        <h1 class="name">Arun K</h1>
+      </div>
+    </div>
     <p class="hero-role">Associate Manager, SRE at Accenture — leading observability, automation, and incident management for large-scale ecommerce platforms.</p>
     <p class="hero-loc">Bengaluru, India · arunkkd21@gmail.com · +91 703 412 3661 · <a href="https://www.linkedin.com/in/arun-k-b6a475131/">https://www.linkedin.com/in/arun-k-b6a475131/</a></p>
 
@@ -456,7 +500,7 @@
       <span class="section-tag">summary</span>
     </div>
     <div class="summary prose">
-      <p>Site Reliability Engineering leader with 11+ years of experience driving application stability, observability, CDN engineering, and automation for large-scale ecommerce platforms. Currently Associate Manager at Accenture, leading a team of 16–30 engineers across incident management, cloud migration, content delivery, and enterprise observability.</p>
+      <p>Site Reliability Engineering leader with 9+ years of experience driving application stability, observability, CDN engineering, and automation for large-scale ecommerce platforms. Currently Associate Manager at Accenture, leading a team of 16–30 engineers across incident management, cloud migration, content delivery, and enterprise observability.</p>
       <p>Proven record of reducing incident inflow by over 60% and alert toil by over 50% through automation-first strategies, while sustaining greater than 95% uptime during high-velocity business events. Early adopter of AI-driven operations, building agentic tooling that automatically analyzes alerts, correlates events, and determines root cause to accelerate incident resolution.</p>
       <p>Hands-on experience with Akamai CDN engineering, troubleshooting content delivery across the enterprise domain, and monitoring Web Security Analytics to mitigate bot and malicious traffic. AWS-certified, with experience architecting on-premises-to-cloud migrations, building end-to-end observability frameworks, and leading ITIL-aligned incident and problem management using ServiceNow.</p>
     </div>
@@ -551,7 +595,7 @@
     <div class="tools-row">
       <h3>Technical tools &amp; platforms</h3>
       <p>
-        Python<span>·</span>Java<span>·</span>Akamai (CDN, Web Security Analytics)<span>·</span>AWS (EC2)<span>·</span>Splunk<span>·</span>Dynatrace<span>·</span>Grafana<span>·</span>Kibana<span>·</span>OpenSearch<span>·</span>Catchpoint<span>·</span>Sentry<span>·</span>SpeedCurve<span>·</span>ServiceNow<span>·</span>Jira<span>·</span>GoAlert<span>·</span>PagerDuty<span>·</span>Jenkins<span>·</span>GitHub<span>·</span>ReactJS<span>·</span>Node.js<span>·</span>Red Hat OpenShift
+        Akamai (CDN, Web Security Analytics)<span>·</span>Splunk<span>·</span>Dynatrace<span>·</span>Grafana<span>·</span>Kibana<span>·</span>OpenSearch<span>·</span>Catchpoint<span>·</span>Sentry<span>·</span>SpeedCurve<span>·</span>ServiceNow<span>·</span>Jira<span>·</span>GoAlert<span>·</span>PagerDuty<span>·</span>Jenkins<span>·</span>GitHub<span>·</span>Python<span>·</span>ReactJS<span>·</span>Node.js<span>·</span>AWS (EC2)<span>·</span>Red Hat OpenShift
       </p>
     </div>
   </section>
@@ -590,8 +634,8 @@
     <p class="lead">Open to Site Reliability Engineering and engineering leadership roles focused on observability, automation, and large-scale platform stability.</p>
     <div class="contact-row">
       <a href="mailto:your.email@example.com">arunkkd21@gmail.com</a>
-      <a href="tel:+000000000">+91 703 412 3661</a>
-      <a href="https://linkedin.com/in/yourprofile">https://www.linkedin.com/in/arun-k-b6a475131/</a>
+      <a href="tel:+917034123661">+91 703 412 3661</a>
+      <a href="https://www.linkedin.com/in/arun-k-b6a475131/">https://www.linkedin.com/in/arun-k-b6a475131/</a>
     </div>
     <div class="foot-meta">
       <span>Arun K · Bengaluru, India</span>
